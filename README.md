@@ -1,13 +1,15 @@
-🔄 Paprec Data Pipeline
-Pipeline de données automatisé pour la collecte et la validation des tonnages de déchets — construit avec une approche DevOps complète.
-Hébergé via Repos sur Azure.
+# 🔄 Paprec Data Pipeline
 
-📋 Contexte
+Pipeline de données automatisé pour la collecte et la validation des tonnages de déchets — construit avec une approche DevOps complète.
+
+## 📋 Contexte
+
 Paprec Group (350 sites, 16M tonnes/an) génère quotidiennement des rapports CSV de collecte par site. Ce projet automatise l'ingestion, la validation et le chargement de ces données, avec une infrastructure provisionnée en code et un pipeline CI/CD multi-stage.
 
-🏗️ Architecture
+## 🏗️ Architecture
 
- CSV (collecte sites)
+```
+CSV (collecte sites)
         │
         ▼
   ┌─────────────┐     ┌──────────────┐
@@ -21,17 +23,23 @@ Paprec Group (350 sites, 16M tonnes/an) génère quotidiennement des rapports CS
                                                 │
                                                 ▼
                                           SQLite DB
-🛠️ Stack technique
-Composant	Outil	Rôle
-IaC	Bicep	Provisionnement Azure (RG, Storage, Key Vault)
-CI/CD	Azure Pipelines (YAML)	Build, lint, tests, déploiement
-Data pipeline	Python 3.12	Ingestion, validation, transformation
-Tests	pytest + flake8	Tests data + linting
-Secrets	Azure Key Vault	Gestion sécurisée des secrets (RBAC)
-Backlog	Azure Boards	User Stories, traçabilité story → PR → release
-📁 Structure du repo
+```
 
- paprec-data-pipeline/
+## 🛠️ Stack technique
+
+| Composant | Outil | Rôle |
+|-----------|-------|------|
+| IaC | **Bicep** | Provisionnement Azure (RG, Storage, Key Vault) |
+| CI/CD | **Azure Pipelines (YAML)** | Build, lint, tests, déploiement |
+| Data pipeline | **Python 3.12** | Ingestion, validation, transformation |
+| Tests | **pytest + flake8** | Tests data + linting |
+| Secrets | **Azure Key Vault** | Gestion sécurisée des secrets (RBAC) |
+| Backlog | **Azure Boards** | User Stories, traçabilité story → PR → release |
+
+## 📁 Structure du repo
+
+```
+paprec-data-pipeline/
 ├── docs/                        # Documentation projet
 │   ├── PROJECT_BRIEF.md         # Brief projet (contexte, outils, approche)
 │   └── RUNBOOK.md               # Guide d'exploitation
@@ -53,42 +61,54 @@ Backlog	Azure Boards	User Stories, traçabilité story → PR → release
 ├── requirements.txt             # Dépendances Python
 ├── .flake8                      # Config linting
 └── .gitignore
-🚀 Démarrage rapide
-Prérequis
+```
 
-Python 3.12+
-Azure CLI + extension Bicep
-Un compte Azure avec un abonnement actif
-Installation locale
+## 🚀 Démarrage rapide
 
+### Prérequis
+- Python 3.12+
+- Azure CLI + extension Bicep
+- Un compte Azure avec un abonnement actif
 
- git clone https://github.com/tmdlz/paprec-data-pipeline.git
+### Installation locale
+```bash
+git clone https://github.com/tmdlz/paprec-data-pipeline.git
 cd paprec-data-pipeline
 pip install -r requirements.txt
-Lancer les tests
+```
 
-
- pytest tests/ -v
+### Lancer les tests
+```bash
+pytest tests/ -v
 flake8 src/
-Déployer l'infra (dev)
+```
 
-
- az group create --name rg-paprec-dev --location francecentral
+### Déployer l'infra (dev)
+```bash
+az group create --name rg-paprec-dev --location francecentral
 az deployment group create \
   --resource-group rg-paprec-dev \
   --template-file infra/main.bicep \
   --parameters infra/parameters/dev.bicepparam
-📊 Métriques pipeline
-Métrique	Cible
-Temps de build CI	< 2 min
-Couverture tests data	100% des règles métier
-Lint errors	0
-Déploiement IaC	Idempotent, reproductible
-📝 Workflow de contribution
-Créer une branche feature/US-XX-description depuis develop
-Développer + tester en local
-Ouvrir une PR vers develop (utiliser le template)
-CI passe → review → merge
-Release : merge develop → main
-📄 Licence
+```
+
+## 📊 Métriques pipeline
+
+| Métrique | Cible |
+|----------|-------|
+| Temps de build CI | < 2 min |
+| Couverture tests data | 100% des règles métier |
+| Lint errors | 0 |
+| Déploiement IaC | Idempotent, reproductible |
+
+## 📝 Workflow de contribution
+
+1. Créer une branche `feature/US-XX-description` depuis `develop`
+2. Développer + tester en local
+3. Ouvrir une PR vers `develop` (utiliser le template)
+4. CI passe → review → merge
+5. Release : merge `develop` → `main`
+
+## 📄 Licence
+
 Projet de démonstration — usage personnel et pédagogique.
